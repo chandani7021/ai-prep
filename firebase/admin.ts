@@ -1,5 +1,5 @@
 import { cert, getApps, initializeApp } from "firebase-admin/app";
-import { getAuth } from "firebase/auth/web-extension";
+import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase/firestore/lite";
 
 const initFirebaseAdmin = () => {

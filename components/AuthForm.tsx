@@ -17,9 +17,9 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { auth } from "@/firebase/client";
-import { signup } from "@/lib/actions/auth.action";
+import { signin, signup } from "@/lib/actions/auth.action";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -75,6 +75,16 @@ export const AuthForm = ({ type }: { type: FormType }) => {
 				toast.success("Account created successfully! Please sign in.");
 				router.push("/sign-in");
 			} else {
+
+        const { email, password } = data;
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const idToken = await userCredential.user.getIdToken();
+        if (!idToken) {
+          toast.error("Failed to retrieve ID token. Please try again.");
+          return;
+        }
+        await signin({ email, idToken });
+
 				toast.success("Signed in successfully!");
 				router.push("/");
 			}
