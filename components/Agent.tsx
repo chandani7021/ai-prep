@@ -10,7 +10,7 @@ enum CallStatus {
 }
 
 const Agent = ({userName}: AgentProps) => {
-  const callStatus = CallStatus.FINISHED
+  const callStatus = CallStatus.INACTIVE
   const isSpeaking = true; // This should be dynamic based on the agent's state
   const messages = [
     'What is your name?',
@@ -50,18 +50,18 @@ const Agent = ({userName}: AgentProps) => {
       )
     }
 
-    <div className='w-full flex justify-center'>
-      {callStatus !== 'ACTIVE' ? (
+    {/* <div className='w-full flex justify-center'>
+      {callStatus !== CallStatus.ACTIVE ? (
        
-<button type='submit' className='relative btn-call'> <span className={cn('absolute animate-ping rounded-full opacity-75', callStatus!== 'CONNECTING' && 'hidden')} />
-        <span>{callStatus === 'INACTIVE' || callStatus === 'FINISHED'? "Call" : "..."}</span>
+<button type='submit' className='relative btn-call'> <span className={cn('absolute animate-ping rounded-full opacity-75', callStatus!== CallStatus.CONNECTED && 'hidden')} />
+        <span>{callStatus === CallStatus.INACTIVE || callStatus === CallStatus.FINISHED? "Call" : "..."}</span>
 </button>
       ): (
         <button type='submit' className='btn-disconnect'>
           End
         </button>
       )}
-    </div>
+    </div> */}
     </div>
   )
 }

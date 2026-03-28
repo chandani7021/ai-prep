@@ -1,7 +1,7 @@
+import { db } from '@/firebase/admin';
 import { getRandomInterviewCover } from '@/lib/utils';
 import { google } from '@ai-sdk/google'
 import { generateText } from "ai"
-import { create } from 'domain';
 
 export async function GET() {
     return Response.json({ success: true, data: 'THANK YOU!'}, { status: 200 });
