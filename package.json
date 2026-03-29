@@ -13,7 +13,7 @@
 		"@hookform/resolvers": "^5.2.2",
 		"@vapi-ai/api": "^0.1.0",
 		"@vapi-ai/web": "^2.5.2",
-		"ai": "^6.0.116",
+		"ai": "^6.0.141",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"dayjs": "^1.11.19",

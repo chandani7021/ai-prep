@@ -5,22 +5,23 @@ import Link from "next/link";
 import React from "react";
 import DisplayTechStack from "./DisplayTechStack";
 import { Button } from "./ui/button";
+import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 
-const InterviewCard = ({
-	interviewId,
+const InterviewCard = async ({
+	id,
 	userId,
 	role,
 	type,
 	techstack,
 	createdAt,
 }: InterviewCardProps) => {
-	const feedback = null as Feedback | null;
+	const feedback =  userId && id ? await getFeedbackByInterviewId({ interviewId: id, userId }) : null;
 	const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
 	const formattedDate = dayjs(
 		feedback?.createdAt || createdAt || new Date(),
 	).format("MMM D, YYYY");
 	return (
-		<div className="card-border w-[360px] max-sm:w-full min-h-96">
+		<div className="card-border w-90 max-sm:w-full min-h-96">
 			<div className="card-interview">
 				<div>
 					<div className="absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg bg-light-600">
@@ -66,8 +67,8 @@ const InterviewCard = ({
 						<Link
 							href={
 								feedback
-									? `/interviews/${interviewId}/feedback`
-									: `/interviews/${interviewId}`
+									? `/interviews/${id}/feedback`
+									: `/interviews/${id}`
 							}
 						>
 							{feedback ? "View Feedback" : "Take Interview"}

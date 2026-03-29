@@ -5,6 +5,9 @@ import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { vapi } from '@/lib/vapi.sdk';
 import { useRouter } from 'next/navigation';
+import { interviewer } from '@/constants';
+import { create } from 'domain';
+import { createFeedback } from '@/lib/actions/general.action';
 
 
 enum CallStatus {
@@ -20,7 +23,7 @@ interface SavedMessage {
   content: string;
 }
 
-const Agent = ({userName, userId, type }: AgentProps) => {
+const Agent = ({userName, userId, type, interviewId, questions }: AgentProps) => {
   const router = useRouter();
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [ callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
@@ -67,11 +70,31 @@ const Agent = ({userName, userId, type }: AgentProps) => {
     }
   }, [])
 
+  const handleGenerateFeedback = async (messages: SavedMessage[]) => {
+    console.log("Generating feedback with messages:", messages);
+    // TODO: create server actions that generates feedback
+    const { success, feedbackId: id} = await createFeedback({
+      interviewId: interviewId || "",
+      userId: userId || "",
+      transcript: messages
+    });
+    if(success && id){
+      router.push(`/interview/${interviewId}/feedback`) // Navigate to feedback page with the generated feedback ID
+    }else{
+      console.error("Failed to generate feedback");
+      router.push("/")
+    }
+  }
+
   useEffect(() => {
     if(callStatus === CallStatus.FINISHED) {
-      router.push('/');
+      if(type === "generate"){
+        router.push("/")
+      }else{
+        handleGenerateFeedback(messages);
+      }
     }
-  }, [callStatus, router])
+  }, [callStatus, router, messages, type])
 
 const handleCall = async () => {
   setCallStatus(CallStatus.CONNECTING);
@@ -80,12 +103,25 @@ const handleCall = async () => {
     const workflowId = process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID;
     if (!workflowId) throw new Error('Workflow ID not configured');
 
-    await (vapi as any).start(null, null, null, workflowId, {
-      variableValues: {
-        username: userName,
-        userid: userId, 
+    if(type === "generate"){
+      await (vapi as any).start(null, null, null, workflowId, {
+        variableValues: {
+          username: userName,
+          userid: userId, 
+        }
+      });
+    }else{
+      let formattedQuestions = '';
+      if(questions){
+        formattedQuestions = questions.map((questions) => ` - ${questions}`).join("\n");
       }
-    });
+
+      await (vapi as any).start(interviewer, {
+        variableValues: {
+          questions: formattedQuestions,
+        } 
+      });
+    }
   } catch (error) {
     console.error('Error:', error);
     setCallStatus(CallStatus.INACTIVE);
