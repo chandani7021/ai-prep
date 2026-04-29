@@ -16,24 +16,34 @@ const page = async () => {
 
 	return (
 		<>
-			<section className="card-cta">
-				<div className="flex flex-col gap-6 max-w-lg">
-					<h2>Get Interview Ready with AI powered practice and feedback</h2>
-					<p className="text-lg">
-						Practice on real interview and get instant feedback
+			<section className="card-cta relative overflow-hidden group">
+				<div className="flex flex-col gap-8 max-w-2xl z-10">
+					<h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+						Elevate Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-200 to-primary-100">Interview Performance</span> with AI
+					</h1>
+					<p className="text-xl text-light-100 max-w-md leading-relaxed">
+						Master your next interview with real-time AI feedback, personalized practice, and deep performance insights.
 					</p>
-					<Button asChild className="btn-primary">
-						<Link href="/interview">Start an Interview</Link>
-					</Button>
+					<div className="flex gap-4">
+						<Button asChild className="btn-primary !min-h-14 !px-10 !text-lg">
+							<Link href="/interview">Start Practice</Link>
+						</Button>
+						<Button asChild className="btn-secondary !min-h-14 !px-10 !text-lg">
+							<Link href="/interviews">View History</Link>
+						</Button>
+					</div>
 				</div>
 
-				<Image
-					src="/robot.png"
-					alt="Robot Image"
-					width={400}
-					height={400}
-					className="max-sm:hidden"
-				/>
+				<div className="relative max-sm:hidden">
+					<div className="absolute inset-0 bg-primary-200/20 blur-[100px] rounded-full animate-pulse" />
+					<Image
+						src="/robot.png"
+						alt="AI Assistant"
+						width={450}
+						height={450}
+						className="relative z-10 transition-transform duration-700 group-hover:scale-105"
+					/>
+				</div>
 			</section>
 
 			<section className="flex flex-col gap-6 mt-6">

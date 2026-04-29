@@ -99,12 +99,14 @@ export const AuthForm = ({ type }: { type: FormType }) => {
 	return (
 		<div className="card-border lg:min-w-141.5">
 			<Card className="w-full  ">
-				<div className="flex flex-col items-center justify-center p-4 gap-6">
-					<div className="flex flex-row gap-2 justify-center">
-						<Image src="/logo.svg" alt="Logo" height={32} width={32} />
-						<h2 className="text-2xl font-bold">Interview Prep</h2>
+				<div className="flex flex-col items-center justify-center p-8 gap-8">
+					<div className="flex flex-row gap-3 justify-center items-center group">
+						<div className="p-2 rounded-xl bg-primary-200/10 border border-primary-200/20 group-hover:bg-primary-200/20 transition-colors">
+							<Image src="/logo.svg" alt="Logo" height={28} width={28} />
+						</div>
+						<h2 className="text-3xl font-bold tracking-tight text-white">Interview <span className="text-primary-200">Prep</span></h2>
 					</div>
-					<h3 className="text-2xl font-bold">Prep for your job Interview</h3>
+					<h3 className="text-2xl font-semibold text-center text-light-100">Prep for your job Interview</h3>
 				</div>
 				<CardHeader>
 					<CardTitle>{isSignIn ? "Sign In" : "Sign Up"}</CardTitle>
@@ -191,7 +193,7 @@ export const AuthForm = ({ type }: { type: FormType }) => {
 								: "Already have an account? "}{" "}
 							<Link
 								href={!isSignIn ? "/sign-in" : "/sign-up"}
-								className="font-bold text-user-primary ml-1"
+								className="font-bold text-primary-200 ml-1 hover:text-primary-100 transition-colors"
 							>
 								{!isSignIn ? "Sign In" : "Sign Up"}
 							</Link>

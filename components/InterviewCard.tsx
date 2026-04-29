@@ -21,49 +21,51 @@ const InterviewCard = async ({
 		feedback?.createdAt || createdAt || new Date(),
 	).format("MMM D, YYYY");
 	return (
-		<div className="card-border w-90 max-sm:w-full min-h-96">
+		<div className="card-border w-90 max-sm:w-full min-h-96 group transition-all duration-300 hover:shadow-2xl hover:shadow-primary-200/10">
 			<div className="card-interview">
-				<div>
-					<div className="absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg bg-light-600">
-						<p className="badge-text">{normalizedType}</p>
+				<div className="relative">
+					<div className="absolute -top-2 -right-2 w-fit px-3 py-1 rounded-full bg-primary-200 shadow-lg shadow-primary-200/20 z-20">
+						<p className="badge-text !text-white text-[10px]">{normalizedType}</p>
 					</div>
 
-					<Image
-						src={getRandomInterviewCover()}
-						alt="cover image"
-						width={90}
-						height={90}
-						className="rounded-full object-fit size=[90px]"
-					/>
+					<div className="relative size-[100px] rounded-full overflow-hidden border-2 border-white/10 group-hover:border-primary-200/50 transition-colors duration-300">
+						<Image
+							src={getRandomInterviewCover()}
+							alt="cover image"
+							fill
+							className="object-cover transition-transform duration-500 group-hover:scale-110"
+						/>
+					</div>
 
-					<h3 className="mt-5 capitalize">{role} Interview</h3>
+					<h3 className="mt-6 capitalize text-xl group-hover:text-primary-100 transition-colors duration-300">{role} Interview</h3>
 
-					<div className="flex flex-row gap-5 mt-3">
-						<div className="flex flex-row gap-2">
+					<div className="flex flex-row gap-5 mt-4">
+						<div className="flex flex-row gap-2 items-center text-light-400">
 							<Image
 								src="/calendar.svg"
 								alt="Calendar Icon"
-								width={22}
-								height={22}
+								width={18}
+								height={18}
+								className="opacity-70"
 							/>
-							<p className="text-sm">{formattedDate}</p>
+							<p className="text-xs font-medium">{formattedDate}</p>
 						</div>
 
-						<div className="flex flex-row gap-2">
-							<Image src="/star.svg" alt="star" width={22} height={22} />
-							<p className="text-sm">{feedback?.totalScore || "---"}</p>
+						<div className="flex flex-row gap-2 items-center text-light-400">
+							<Image src="/star.svg" alt="star" width={18} height={18} className="opacity-70" />
+							<p className="text-xs font-medium">{feedback?.totalScore || "---"}</p>
 						</div>
 					</div>
 
-					<p className="line-clamp-2 mt-5">
+					<p className="line-clamp-2 mt-6 text-sm text-light-400 leading-relaxed">
 						{feedback?.finalAssessment ||
 							"No feedback available yet. Please complete the interview to receive feedback."}
 					</p>
 				</div>
 
-				<div className="flex flex-row justify-between">
+				<div className="flex flex-row justify-between items-center mt-auto pt-6 border-t border-white/5">
 					<DisplayTechStack techStack={techstack} />
-					<Button className="btn-primary">
+					<Button className="btn-primary scale-90 origin-right">
 						<Link
 							href={
 								feedback
