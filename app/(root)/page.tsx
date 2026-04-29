@@ -29,7 +29,7 @@ const page = async () => {
 							<Link href="/interview">Start Practice</Link>
 						</Button>
 						<Button asChild className="btn-secondary !min-h-14 !px-10 !text-lg">
-							<Link href="/interviews">View History</Link>
+							<Link href="/">View History</Link>
 						</Button>
 					</div>
 				</div>
